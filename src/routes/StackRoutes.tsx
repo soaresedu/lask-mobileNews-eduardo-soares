@@ -1,19 +1,21 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { WelcomeScreen } from '../screens/WelcomeScreen';
-import { HomeScreen } from '../screens/HomeScreen';
+import { MyTabs } from './BottomTabRoutes';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export function StackRoutes(){
     return(
-        <NavigationContainer>
-            <Stack.Navigator>
+        <NavigationContainer >
+            <Stack.Navigator screenOptions={{cardStyle:{backgroundColor: '#FFF'}}}>
                 <Stack.Screen name='WelcomeScreen' component={WelcomeScreen} options={{headerShown: false}}/>
-                <Stack.Screen name='HomeScreen' component={HomeScreen}/>
+                <Stack.Screen name='HomeScreen' component={MyTabs} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>
+
+        
     )
 }

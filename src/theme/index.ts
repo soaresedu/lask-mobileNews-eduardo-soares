@@ -12,6 +12,7 @@ export default{
         MD: '16px',
         XMD: '18px',
         LG: '20px',
+        ML: '24px',
         XL: '32px',
       },
 
@@ -20,6 +21,9 @@ export default{
         SECONDARY: '#6D6265',
         LINK: '#0E0AB1',
         BLUEBUTTON: '#2D5BD0',
-        BACKGROUNDPRIMARY: '#E9EEFA'
+        BACKGROUNDPRIMARY: '#E9EEFA',
+        BACKGROUNDSECUNDARY: '#FFF',
+        BRANDBLUE: '#E9EEFA'
+  
       }
 }
