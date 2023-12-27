@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, FlatList, Image } from 'react-native';
+import { SvgUri } from 'react-native-svg';
 
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle, ForYouTitle} from './style';
 import axios from 'axios';
@@ -7,10 +8,12 @@ import axios from 'axios';
 export function HomeScreen(){
 
     const [news, setNews] = useState([]);
+    const [weather, setWeather] = useState(null);
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toDateString();
 
     const apikeynews = '3a9bb8c60d1f46ffa570a16c27016da9';
-
-    const apiKey = 'ba2df9b41c686b8796b7b42ee34f640f https://gnews.io/api/v4/top-headlines?category=general&apikey=${apiKey}';
 
     useEffect(() => {
 
@@ -27,16 +30,32 @@ export function HomeScreen(){
       getData();
     }, []);
 
+    useEffect(() => {
+      const getWeatherData = async () => {
+        try{
+          const responses = await axios.get(
+            `https://api.hgbrasil.com/weather?format=json-cors&woeid=456257`);
+          setWeather(responses.data.results);
+        }catch (error){
+          console.log("Error:", error)
+        }
+      }
+
+      getWeatherData();
+    }, []);
 
   return (
     <Container>
       <GreetingView style={{backgroundColor: '#E9EEFA'}}>
         <GreetingsSection>
             <SalutationText>
-                Good Morning,{'\n'}Trung{'\n'} 
-                <DateText>Sun 9 April, 2023</DateText> 
+                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}Trung{'\n'} 
+                <DateText>{formattedDate}</DateText> 
             </SalutationText>    
-            <WeatherInfo>☀️ Sunny 32ºC</WeatherInfo>
+            <WeatherInfo> 
+              {weather?.description}<Text> </Text> 
+              {weather?.temp}ºC
+            </WeatherInfo>
         </GreetingsSection>
       </GreetingView>
       <FlatList
@@ -57,6 +76,5 @@ export function HomeScreen(){
         )}/>
       )}/>
     </Container>
-    
    );
 }

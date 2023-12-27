@@ -39,7 +39,7 @@ export const DateText = styled.Text`
 export const WeatherInfo = styled.Text`
     justify-content: center;
     align-self: center;
-    margin-left: 70px;
+    margin-left: 50px;
     font-family: ${theme.FONT_FAMILY.SEMIBOLD};
     font-size: ${theme.FONT_SIZE.SM};
     color: ${theme.COLORS.SECONDARY};
