@@ -64,13 +64,12 @@ export function HomeScreen(){
       data={news}
       keyExtractor={(item) => String(item.title)}
       renderItem={({item}) => (
-        
           <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={news}
-        keyExtractor={(item) => String(item.title)}
-        renderItem={({item}) => (
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={news}
+          keyExtractor={(item) => String(item.title)}
+          renderItem={({item}) => (
           <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
           <FlatListView>
             <ImageNews source={{uri: item.urlToImage}}/>
