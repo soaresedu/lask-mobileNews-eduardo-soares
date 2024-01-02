@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, TextInput, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, TextInput, Text, ScrollView, FlatList, TouchableOpacity, Modal, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { Container, ScreenTitle, TitleContainer, CategoriesContainer, CategoryName } from './style';
+import { Container, ScreenTitle, TitleContainer, CategoriesContainer, CategoryName, FlatListView, NewsImage, NewsTitle, PublishedDate, SearchBarContainer, SearchBar, CancelButton } from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
-import axios from 'axios';
-import { FlatListView, NewsImage, NewsTitle, PublishedDate } from './style';
-import { useNavigation } from '@react-navigation/native';
 
 export function ExploreScreen(){
 
-  const [searchText, setSearchText] = useState('');
-  const [newsByCategory, setNewsByCategory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const navigation = useNavigation();
+  type RootStackParamList = {
+    NewsScreen: { data: any };
+  };
+  
+  type NewsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewsScreen'>;
 
+  const [searchText, setSearchText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newsByCategory, setNewsByCategory] = useState([]);
+  const [searchedNews, setSearchedNews] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  
+  const navigation: NewsScreenNavigationProp = useNavigation();
   const categories = {
     business: 'business',
     entertainment: 'entertainment',
@@ -28,10 +36,8 @@ export function ExploreScreen(){
   }
 
   const navigate = (item) => {
-    navigation.navigate("NewsScreen", {data: item})
+    navigation.navigate('NewsScreen', { data: item });
   };
-
-  const apiKey = 'ba2df9b41c686b8796b7b42ee34f640f';
 
   useEffect(() => {
     const getNewsByCategory = async () => {
@@ -46,11 +52,24 @@ export function ExploreScreen(){
     getNewsByCategory();
   }, [selectedCategory]);
 
+  useEffect(() => {
+    const getSearchedNews = async () => {
+      try{
+        const responses = await axios.get(
+          `https://gnews.io/api/v4/search?q=${searchText}&apikey=${GNewsapiKey}`);
+        setSearchedNews(responses.data.articles);
+      }catch (error){
+        console.log("Error:", error)
+      }
+    };
+    getSearchedNews();
+  }, [setSearchText]);
+
   return (
     <Container>
       <TitleContainer>
         <ScreenTitle>Explore</ScreenTitle>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicons name="search-outline" size={20}></Ionicons>
         </TouchableOpacity>
       </TitleContainer>
@@ -81,6 +100,41 @@ export function ExploreScreen(){
           </FlatListView>
           </TouchableOpacity>
         )}/>
+        <Modal
+        animationType='slide'
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+          <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <SearchBarContainer>
+                <SearchBar
+                onChangeText={setSearchText}
+                value={searchText}
+                placeholder='Search something'
+                />
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <CancelButton>Cancel</CancelButton>
+                </TouchableOpacity>
+              </SearchBarContainer>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+          <FlatList
+          showsHorizontalScrollIndicator={false}
+          data={searchedNews}
+          keyExtractor={(item) => String(item.title)}
+          renderItem={({item}) => (
+            <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
+            <FlatListView>
+              <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>
+              <NewsImage source={{uri: item.image}}/>
+              <PublishedDate>{item.publishedAt}</PublishedDate>
+            </FlatListView>
+            </TouchableOpacity>
+          )}/>
+        </Modal>
     </Container>
   );
 }

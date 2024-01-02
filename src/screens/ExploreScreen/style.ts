@@ -84,3 +84,24 @@ export const PublishedDate = styled.Text`
     margin-top: -20px;
     color: ${theme.COLORS.SECONDARY};
 `;
+
+export const SearchBarContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 32px;
+`;
+
+export const SearchBar = styled.TextInput`
+    border-width: 1px;
+    border-color: ${theme.COLORS.LINK};
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 270px;
+`;
+
+export const CancelButton = styled.Text`
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.SM};
+    color: ${theme.COLORS.LINK};
+`;

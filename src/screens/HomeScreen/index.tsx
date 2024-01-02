@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Text, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle} from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
@@ -8,12 +9,18 @@ import axios from 'axios';
 
 export function HomeScreen(){
 
+  type RootStackParamList = {
+    NewsScreen: { data: any };
+  };
+  
+  type NewsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewsScreen'>;
+
     const [news, setNews] = useState<any>([]);
     const [weather, setWeather] = useState<any>(null);
 
     const currentDate = new Date();
     const formattedDate = currentDate.toDateString();
-    const navigation = useNavigation();
+    const navigation: NewsScreenNavigationProp = useNavigation();
 
     useEffect(() => {
       const getData = async () => {
