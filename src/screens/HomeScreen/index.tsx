@@ -3,6 +3,7 @@ import {Text, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle} from './style';
+import { GNewsapiKey } from '../../service/api/apiKey';
 import axios from 'axios';
 
 export function HomeScreen(){
@@ -14,13 +15,11 @@ export function HomeScreen(){
     const formattedDate = currentDate.toDateString();
     const navigation = useNavigation();
 
-    const apikeynews = '3a9bb8c60d1f46ffa570a16c27016da9';
-
     useEffect(() => {
       const getData = async () => {
         try {
             const response = await axios.get(
-              `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apikeynews}`);
+              `https://gnews.io/api/v4/top-headlines?category=general&apikey=${GNewsapiKey}`);
             setNews(response.data.articles);
             } catch (error) {
             console.error("Erro ao buscar dados:", error);
@@ -72,7 +71,7 @@ export function HomeScreen(){
           renderItem={({item}) => (
           <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
           <FlatListView>
-            <ImageNews source={{uri: item.urlToImage}}/>
+            <ImageNews source={{uri: item.image}}/>
             <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>
             <Text>{item.source.name}</Text>
           </FlatListView>

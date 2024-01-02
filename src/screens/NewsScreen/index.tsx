@@ -7,12 +7,12 @@ export function NewsScreen({route}){
 
   return (
     <View>
-      <NewsImage source={{ uri: data.urlToImage }} />
+      <NewsImage source={{ uri: data.image }} />
       <TextContainer> 
         <Title>{data.title}</Title>
         <AuthorInfo>
           <AuthorImage source={require('../../assets/images/authorpicture.png')}/>
-          <Author>{data.author}</Author>
+          <Author>{data.source.name}</Author>
         </AuthorInfo>
         <NewsText>
         {data.content}{'\n'}
