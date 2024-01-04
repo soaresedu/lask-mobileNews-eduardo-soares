@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { HomeScreen } from '../screens/HomeScreen';
 import { ExploreScreen } from '../screens/ExploreScreen';
-import { BookmarksScreen } from '../screens/BookmarksScreen';
+import { LikedNewsScreen } from '../screens/LikedNewsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -18,8 +18,8 @@ export function MyTabs() {
       <Tab.Screen name="Explore" component={ExploreScreen} options={{headerShown: false, tabBarIcon: ({focused}) => {
        const iconName = focused ? "globe" : "globe-outline";
        return <Ionicons name={iconName} size={30}/>}}}/>
-      <Tab.Screen name="Bookmarks" component={BookmarksScreen} options={{headerShown: false, tabBarIcon: ({focused}) => {
-       const iconName = focused ? "bookmarks" : "bookmarks-outline";
+      <Tab.Screen name="LikedNews" component={LikedNewsScreen} options={{headerShown: false, tabBarIcon: ({focused}) => {
+       const iconName = focused ? "heart" : "heart-outline";
        return <Ionicons name={iconName} size={30}/>}}} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false, tabBarIcon: ({focused}) => {
        const iconName = focused ? "person-circle" : "person-circle-outline";

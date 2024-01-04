@@ -4,6 +4,10 @@ import { View } from 'react-native';
 // import { Container } from './styles';
 
 export const ProfileScreen: React.FC = () => {
+
+  
+
+
   return <View />;
 }
 

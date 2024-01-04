@@ -1,13 +1,31 @@
-import { View } from 'react-native';
+import { TouchableOpacity, View} from 'react-native';
+import { useContext, useState } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { NewsImage, TextContainer, Title, AuthorInfo, AuthorImage,Author, NewsText } from './style';
+import { NewsImage, TextContainer, Title, AuthorInfo, AuthorImage,Author, NewsText, ButtonContainer } from './style';
+import { LikedNewsContext } from '../../contexts/likedNews';
+
 
 export function NewsScreen({route}){
-  const {data} = route.params
+
+  const [isPressed, setIsPressed] = useState(false);
+  const { addLikedNews } = useContext(LikedNewsContext);
+  
+  const {data} = route.params;
+
+  const handlePress = () => {
+    setIsPressed(!isPressed);
+    addLikedNews(data);
+  }
 
   return (
     <View>
       <NewsImage source={{ uri: data.image }} />
+      <ButtonContainer>
+        <TouchableOpacity onPress={handlePress}>
+          <Ionicons name="heart-circle-outline" size={40} color={isPressed == true ? 'red' : 'black'}/>
+        </TouchableOpacity>
+      </ButtonContainer>
       <TextContainer> 
         <Title>{data.title}</Title>
         <AuthorInfo>

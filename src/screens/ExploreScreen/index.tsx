@@ -63,7 +63,7 @@ export function ExploreScreen(){
       }
     };
     getSearchedNews();
-  }, [setSearchText]);
+  }, [searchText]);
 
   return (
     <Container>
@@ -124,7 +124,7 @@ export function ExploreScreen(){
           <FlatList
           showsHorizontalScrollIndicator={false}
           data={searchedNews}
-          keyExtractor={(item) => String(item.title)}
+          keyExtractor={(item, index) => String(index)}
           renderItem={({item}) => (
             <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
             <FlatListView>

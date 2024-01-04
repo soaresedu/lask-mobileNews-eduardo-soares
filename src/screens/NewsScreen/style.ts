@@ -48,3 +48,14 @@ export const NewsText = styled.Text`
     margin-bottom: 30px;
     margin-top: 30px;
 `;
+
+export const ButtonContainer = styled.View`
+    position: absolute;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 710px;
+    margin-left: 330px;
+    z-index: 100;
+    align-content: center;
+    justify-content: center;
+`;
