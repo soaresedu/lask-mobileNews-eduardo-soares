@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, TextInput, Text, ScrollView, FlatList, TouchableOpacity, Modal, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { 
+  FlatList, 
+  TouchableOpacity, 
+  Modal, 
+  KeyboardAvoidingView, 
+  Platform, 
+  TouchableWithoutFeedback, 
+  Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { Container, ScreenTitle, TitleContainer, CategoriesContainer, CategoryName, FlatListView, NewsImage, NewsTitle, PublishedDate, SearchBarContainer, SearchBar, CancelButton } from './style';
+import { Container, 
+  ScreenTitle, 
+  TitleContainer, 
+  CategoriesContainer, 
+  CategoryName, 
+  SearchBarContainer, 
+  SearchBar, 
+  CancelButton } from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
+import { News } from '../../components/News';
 
 export function ExploreScreen(){
 
@@ -87,19 +102,7 @@ export function ExploreScreen(){
             </CategoryName>
           </CategoriesContainer>
         )}/>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={newsByCategory}
-          keyExtractor={(item) => String(item.title)}
-          renderItem={({item}) => (
-          <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
-          <FlatListView>
-            <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>
-            <NewsImage source={{uri: item.image}}/>
-            <PublishedDate>{item.publishedAt}</PublishedDate>
-          </FlatListView>
-          </TouchableOpacity>
-        )}/>
+        <News data={newsByCategory} navigate={navigate}/>
         <Modal
         animationType='slide'
         visible={modalVisible}
@@ -121,19 +124,7 @@ export function ExploreScreen(){
               </SearchBarContainer>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
-          <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={searchedNews}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={({item}) => (
-            <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
-            <FlatListView>
-              <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>
-              <NewsImage source={{uri: item.image}}/>
-              <PublishedDate>{item.publishedAt}</PublishedDate>
-            </FlatListView>
-            </TouchableOpacity>
-          )}/>
+          <News data={searchedNews} navigate={navigate}/>
         </Modal>
     </Container>
   );

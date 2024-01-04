@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import React, { useContext } from 'react';
 import { LikedNewsContext } from '../../contexts/likedNews';
-import { NewsImage, PublishedDate } from '../ExploreScreen/style';
-import { FlatListView, NewsTitle } from '../HomeScreen/style';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+
+import { News } from '../../components/News';
+import { Container, ScreenTitle, TitleContainer } from './style';
 
 export function LikedNewsScreen(){
 
@@ -21,20 +21,13 @@ export function LikedNewsScreen(){
     navigation.navigate('NewsScreen', { data: item });
   };
 
-  return <View>
-    <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={likedNews}
-          keyExtractor={(item) => String(item.title)}
-          renderItem={({item}) => (
-          <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
-          <FlatListView>
-            <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>
-            <NewsImage source={{uri: item.image}}/>
-            <PublishedDate>{item.publishedAt}</PublishedDate>
-          </FlatListView>
-          </TouchableOpacity>
-        )}/>
-  </View>;
+  return (
+  <Container>
+    <TitleContainer>
+        <ScreenTitle>You Liked</ScreenTitle>
+    </TitleContainer>
+    <News data={likedNews} navigate={navigate}/>
+  </Container>
+  );
 }
 

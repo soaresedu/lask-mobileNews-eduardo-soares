@@ -1,11 +1,24 @@
 import React, {createContext, useState} from "react";
 
-export const LikedNewsContext = createContext({});
+type News = {
+    id: string;
+    title: string;
+    image: string;
+    publishedAt: string;
+  };
+  
+  type LikedNewsContextType = {
+    likedNews: News[];
+    addLikedNews: (news: News) => void;
+  };
+
+  export const LikedNewsContext = createContext<LikedNewsContextType | undefined>(undefined);
 
 export function LikedNewsProvider({children}){
+
     const [likedNews, setLikedNews] = useState([]);
 
-    const addLikedNews = (news) => {
+    const addLikedNews = (news: News) => {
         setLikedNews((prevLikedNews) => [...prevLikedNews, news]);
     };
     
