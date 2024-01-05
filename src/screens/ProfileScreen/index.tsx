@@ -1,13 +1,17 @@
-import React from 'react';
-import { View } from 'react-native';
+import { View } from "react-native";
 
-// import { Container } from './styles';
+import { ButtonInput } from "../../components/Button";
 
-export const ProfileScreen: React.FC = () => {
+export function ProfileScreen(){
 
-  
+  const handlePress = () => {
+    console.log("aajaj")
+  }
 
-
-  return <View />;
+    return(
+        <View>
+            <ButtonInput onPress={handlePress} title="Login"></ButtonInput>
+        </View>
+    )
 }
 

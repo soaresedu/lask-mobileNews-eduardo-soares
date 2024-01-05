@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "951392509672",
+    "project_id": "mobile-news-1a6c6",
+    "storage_bucket": "mobile-news-1a6c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951392509672:android:0f6436e479f3e3dad0735d",
+        "android_client_info": {
+          "package_name": "com.eduardo_soares.mobileNewsApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhxZdkzm2tKtzAHys7HP5hiepoxum990E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

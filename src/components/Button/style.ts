@@ -2,20 +2,23 @@ import styled from "styled-components/native";
 
 import theme from '../../theme'
 
-export const ButtonContainer = styled.TouchableOpacity`
-    margin-top: 24px;
-    margin-bottom: 20px;
-    width: 140px;
-    height: 54px;
-    border-radius: 30px;
-    background-color: ${theme.COLORS.BLUEBUTTON};
-    align-items: center;
-    justify-content: center;
-    align-self: center;
+export const ButtonContainer = styled.View`
 `;
 
-export const ButtonText = styled.Text`
-    color: ${theme.COLORS.BACKGROUNDPRIMARY};
-    font-size: ${theme.FONT_SIZE.LG};
-    text-align: center;
+export const Button = styled.TouchableOpacity`
+        width: 319px;
+        height: 63px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 7px;
+        background-color: ${theme.COLORS.BLUEBUTTON};
+        border-radius: 25px;
+        justify-content: center;
+`;
+
+export const ButtonTitle = styled.Text`
+        color: ${theme.COLORS.TEXTSECONDARY};
+        font-size: ${theme.FONT_SIZE.XMD};
+        font-family: ${theme.FONT_FAMILY.SEMIBOLD};
+        text-align: center;
 `;

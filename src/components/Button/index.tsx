@@ -1,13 +1,13 @@
-import React from 'react';
+import { ButtonContainer, Button, ButtonTitle } from './style';
 
-import { ButtonContainer, ButtonText } from './style';
-
-export function Button(props){
-
-    return(
-        <ButtonContainer activeOpacity={0.8}>
-            <ButtonText>{props}</ButtonText>
+export const ButtonInput = ({title, onPress, style, textStyle}) => {
+    return( 
+        <ButtonContainer>
+            <Button style={style} onPress={onPress}>
+                <ButtonTitle style={textStyle}>{title}</ButtonTitle>
+            </Button>
         </ButtonContainer>
-    )
+    );
 }
+
 

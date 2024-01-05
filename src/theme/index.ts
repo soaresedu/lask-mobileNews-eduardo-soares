@@ -23,7 +23,8 @@ export default{
         BLUEBUTTON: '#2D5BD0',
         BACKGROUNDPRIMARY: '#E9EEFA',
         BACKGROUNDSECUNDARY: '#FFF',
-        BRANDBLUE: '#E9EEFA'
+        BRANDBLUE: '#E9EEFA',
+        TEXTSECONDARY: '#F5F4F2'
   
       }
 }
