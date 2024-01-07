@@ -10,7 +10,7 @@ export function ProfileScreen(){
 
     return(
         <View>
-            <ButtonInput onPress={handlePress} title="Login"></ButtonInput>
+            
         </View>
     )
 }
