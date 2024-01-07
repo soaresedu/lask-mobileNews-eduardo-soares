@@ -3,6 +3,7 @@ import { useFonts, Inter_400Regular, Inter_700Bold, Inter_600SemiBold } from '@e
 
 import { StackRoutes } from './src/routes/StackRoutes';
 import { LikedNewsProvider } from './src/contexts/likedNews';
+import { AuthProvider } from './src/contexts/auth';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -10,9 +11,11 @@ export default function App() {
   });
 
   return (
-    <LikedNewsProvider>
-      <StackRoutes/>
-    </LikedNewsProvider>
+    <AuthProvider navigation={undefined}>
+      <LikedNewsProvider>
+        <StackRoutes/>
+      </LikedNewsProvider>
+    </AuthProvider>
   );
 }
 

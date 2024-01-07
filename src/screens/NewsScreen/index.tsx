@@ -1,22 +1,52 @@
-import { TouchableOpacity, View} from 'react-native';
-import { useContext, useState } from 'react';
+import { Alert, TouchableOpacity, View} from 'react-native';
+import { useContext, useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { NewsImage, TextContainer, Title, AuthorInfo, AuthorImage,Author, NewsText, ButtonContainer } from './style';
 import { LikedNewsContext } from '../../contexts/likedNews';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function NewsScreen({route}){
 
   const [isPressed, setIsPressed] = useState(false);
-  const { addLikedNews } = useContext(LikedNewsContext);
+  const { addLikedNews, likedNews, storeLikedNews } = useContext(LikedNewsContext);
   
   const {data} = route.params;
 
   const handlePress = () => {
-    setIsPressed(!isPressed);
-    addLikedNews(data);
-  }
+    const isAlreadyLiked = likedNews.some((likedItem) => likedItem.id === data.id);
+    if(!isAlreadyLiked){
+      setIsPressed(!isPressed);
+      addLikedNews(data);
+      storeLikedNews();
+      storePressedState(isPressed);
+    }
+  };
+
+  const storePressedState = async (isPressed) => {
+    try {
+      const jsonValue = JSON.stringify(isPressed);
+      await AsyncStorage.setItem('pressed_key', jsonValue);
+    }catch(error){
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      Alert.alert(errorCode, errorMessage);
+    }
+  };
+
+  useEffect(() => {
+    const getPressedState = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('pressed_key');
+        setIsPressed(JSON.parse(jsonValue));
+      }catch(error){
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert(errorCode, errorMessage);
+      }
+    };
+    getPressedState();
+  }, [])
 
   return (
     <View>

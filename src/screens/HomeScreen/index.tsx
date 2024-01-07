@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {Text, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle} from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
 import axios from 'axios';
+import { AuthContext } from "../../contexts/auth";
 
 export function HomeScreen(){
 
@@ -21,6 +22,7 @@ export function HomeScreen(){
     const currentDate = new Date();
     const formattedDate = currentDate.toDateString();
     const navigation: NewsScreenNavigationProp = useNavigation();
+    const { name } = useContext(AuthContext);
 
     useEffect(() => {
       const getData = async () => {
@@ -57,7 +59,7 @@ export function HomeScreen(){
       <GreetingView>
         <GreetingsSection>
             <SalutationText>
-                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}Trung{'\n'} 
+                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}{name}{'\n'} 
                 <DateText>{formattedDate}</DateText> 
             </SalutationText>    
             <WeatherInfo> 

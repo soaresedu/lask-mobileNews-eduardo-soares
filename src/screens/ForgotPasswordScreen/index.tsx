@@ -1,28 +1,16 @@
-import { useState } from "react";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { useContext, useState } from "react";
 
 import { ButtonInput } from "../../components/Button";
 import { Input } from "../../components/TextInput";
 import { Container, Title } from "./style";
+import { AuthContext } from "../../contexts/auth";
 
-export function ForgotScreen({navigation}){
+export function ForgotScreen(){
 
     const [email, setEmail] = useState('');
+    const { handleRedefinePassword } = useContext(AuthContext);
 
-    const handleRedefinePassword = () => {
-        const auth = getAuth();
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            navigation.navigate('LoginScreen')
-            // Password reset email sent!
-            // ..
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-        });
-    }
+    handleRedefinePassword();
 
     return(
         <Container>
