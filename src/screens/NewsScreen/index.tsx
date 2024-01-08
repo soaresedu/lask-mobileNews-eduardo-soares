@@ -9,24 +9,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export function NewsScreen({route}){
 
   const [isPressed, setIsPressed] = useState(false);
-  const { addLikedNews, likedNews, storeLikedNews } = useContext(LikedNewsContext);
+  const { likedNews, storeLikedNews, setLikedNews } = useContext(LikedNewsContext);
   
   const {data} = route.params;
 
-  const handlePress = () => {
-    const isAlreadyLiked = likedNews.some((likedItem) => likedItem.id === data.id);
-    if(!isAlreadyLiked){
-      setIsPressed(!isPressed);
-      addLikedNews(data);
-      storeLikedNews();
-      storePressedState(isPressed);
+  const handlePress = async () => {
+    try {
+      const isAlreadyLiked = likedNews.some((likedItem) => likedItem.title === data.title);
+  
+      let updatedLikedNews;
+  
+      if (isAlreadyLiked) {
+        updatedLikedNews = likedNews.filter((likedItem) => likedItem.title !== data.title);
+      } else {
+        updatedLikedNews = [...likedNews, data];
+      }
+      setLikedNews(updatedLikedNews);
+      await storeLikedNews(updatedLikedNews);
+      await storePressedState(!isPressed);
+    } catch (error) {
+      console.error(error);
     }
   };
-
+  
   const storePressedState = async (isPressed) => {
     try {
+      if(isPressed !== undefined && isPressed !== null){
       const jsonValue = JSON.stringify(isPressed);
       await AsyncStorage.setItem('pressed_key', jsonValue);
+    }else{
+      await AsyncStorage.removeItem('pressed_key');
+    }
     }catch(error){
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -53,14 +66,14 @@ export function NewsScreen({route}){
       <NewsImage source={{ uri: data.image }} />
       <ButtonContainer>
         <TouchableOpacity onPress={handlePress}>
-          <Ionicons name="heart-circle-outline" size={40} color={isPressed == true ? 'red' : 'black'}/>
+          <Ionicons name="heart-circle-outline" size={40} color={likedNews.some((likedItem) => likedItem.title === data.title) ? 'red' : 'black'}/>
         </TouchableOpacity>
       </ButtonContainer>
       <TextContainer> 
         <Title>{data.title}</Title>
         <AuthorInfo>
           <AuthorImage source={require('../../assets/images/authorpicture.png')}/>
-          <Author>{data.source.name}</Author>
+          <Author>{data?.source?.name}</Author>
         </AuthorInfo>
         <NewsText>
         {data.content}{'\n'}

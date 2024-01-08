@@ -7,6 +7,7 @@ export const LikedNewsContext = createContext(undefined);
 export function LikedNewsProvider({children}){
 
     const [likedNews, setLikedNews] = useState([]);
+    const [readArticles, setReadArticles] = useState(0);
 
     const addLikedNews = (news) => {
         setLikedNews((prevLikedNews) => [...prevLikedNews, news]);
@@ -14,8 +15,12 @@ export function LikedNewsProvider({children}){
 
     const storeLikedNews = async (likedNews) => {
         try {
-          const jsonValue = JSON.stringify(likedNews);
-          await AsyncStorage.setItem('likedNews_key', jsonValue);
+            if (likedNews !== undefined && likedNews !== null) {
+                const jsonValue = JSON.stringify(likedNews);
+                await AsyncStorage.setItem('likedNews_key', jsonValue);
+            } else {
+                await AsyncStorage.removeItem('likedNews_key');
+            }
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -36,12 +41,16 @@ export function LikedNewsProvider({children}){
         }
     };
 
+    const addReadArticles = () => {
+        setReadArticles((prevReadArticles) => prevReadArticles + 1);
+    }
+
     useEffect(() => {
         getStoredLikedNews();
     }, []);
     
     return(
-        <LikedNewsContext.Provider value={{likedNews, addLikedNews, storeLikedNews, getStoredLikedNews}}>
+        <LikedNewsContext.Provider value={{likedNews, addLikedNews, storeLikedNews, getStoredLikedNews, setLikedNews, addReadArticles, readArticles}}>
             {children}
         </LikedNewsContext.Provider>
     );

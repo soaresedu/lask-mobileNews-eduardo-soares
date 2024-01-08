@@ -7,6 +7,7 @@ import { Container, GreetingView, GreetingsSection, SalutationText, DateText, We
 import { GNewsapiKey } from '../../service/api/apiKey';
 import axios from 'axios';
 import { AuthContext } from "../../contexts/auth";
+import { LikedNewsContext } from '../../contexts/likedNews';
 
 export function HomeScreen(){
 
@@ -23,6 +24,7 @@ export function HomeScreen(){
     const formattedDate = currentDate.toDateString();
     const navigation: NewsScreenNavigationProp = useNavigation();
     const { name } = useContext(AuthContext);
+    const { addReadArticles, readArticles } = useContext(LikedNewsContext);
 
     useEffect(() => {
       const getData = async () => {
@@ -37,7 +39,7 @@ export function HomeScreen(){
       getData();
     }, []);
 
-    const navigate = (item) => {
+    const navigate = (item) => {      
       navigation.navigate("NewsScreen", {data: item})
     };
 
@@ -78,7 +80,10 @@ export function HomeScreen(){
           data={news}
           keyExtractor={(item) => String(item.title)}
           renderItem={({item}) => (
-          <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
+          <TouchableOpacity activeOpacity={0.4} onPress={() => {
+            navigate(item)
+            addReadArticles()
+          }}>
           <FlatListView>
             <ImageNews source={{uri: item.image}}/>
             <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>

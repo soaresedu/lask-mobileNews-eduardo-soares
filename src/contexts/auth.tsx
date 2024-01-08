@@ -7,7 +7,7 @@ import { app } from "../service/firebase/firebaseSDK";
 
 export const AuthContext = createContext(undefined);
 
-export function AuthProvider({children},{navigation}){
+export function AuthProvider({children, navigation}){
 
     const [name, setName] = useState('');
     const [user, setUser] = useState(null);

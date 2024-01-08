@@ -1,16 +1,18 @@
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useContext } from "react";
 
-import { ProfileImage, Container, UserInfoContainer, UserName } from "./style";
+import { ProfileImage, Container, UserInfoContainer, UserName, Icon, LevelName, AccountInfoContainer, AccountStatiscsContainer, StaticsContent, StatiscsTitle, SettingsTitle } from "./style";
 import { AuthContext } from "../../contexts/auth";
+import { LikedNewsContext } from "../../contexts/likedNews";
 
 export function ProfileScreen(){
 
   const [image, setImage] = useState(null);
   const { name, setName } = useContext(AuthContext);
+  const { readArticles } = useContext(LikedNewsContext);
 
   const pickImage = async () => {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -25,8 +27,10 @@ export function ProfileScreen(){
       try {
         await AsyncStorage.setItem('image_key', imageUri);
         setImage(imageUri);
-      } catch (e) {
-        // saving error
+      }catch(error){
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert(errorCode, errorMessage);
       }
     }
   };
@@ -41,8 +45,10 @@ export function ProfileScreen(){
       if (storedName !== null) {
         setName(storedName);
       }
-    } catch (e) {
-      // error reading value
+    }catch(error){
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      Alert.alert(errorCode, errorMessage);
     }
   };
 
@@ -56,6 +62,25 @@ export function ProfileScreen(){
           </TouchableOpacity>
           <UserName>{name}</UserName>
         </UserInfoContainer>
+        <View>
+          <Icon name='medal-outline' size={25} color='#2D5BD0'/>
+          <LevelName>Bookworm</LevelName>
+        </View>
+        <AccountInfoContainer>
+          <AccountStatiscsContainer>
+            <StatiscsTitle>Article Read</StatiscsTitle>
+            <StaticsContent>{readArticles}</StaticsContent>
+          </AccountStatiscsContainer>
+          <AccountStatiscsContainer>
+            <StatiscsTitle>Streak</StatiscsTitle>
+            <StaticsContent>345 Days</StaticsContent>
+          </AccountStatiscsContainer>
+          <AccountStatiscsContainer>
+            <StatiscsTitle>Level</StatiscsTitle>
+            <StaticsContent>125</StaticsContent>
+          </AccountStatiscsContainer>
+        </AccountInfoContainer>
+        <SettingsTitle>Settings</SettingsTitle>  
     </Container>
     )
 }
