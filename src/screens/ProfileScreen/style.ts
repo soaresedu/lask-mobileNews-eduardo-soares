@@ -63,4 +63,31 @@ export const StaticsContent = styled.Text`
 export const SettingsTitle = styled.Text`
     font-family: ${theme.FONT_FAMILY.SEMIBOLD};
     font-size: ${theme.FONT_SIZE.ML};
+    margin-bottom: 15px;
+`;
+
+export const ModalContainer = styled.Modal`
+    padding: 25px;
+`;
+
+export const HeaderContainer = styled.View`
+    flex-direction: row;
+    
+`;
+
+export const HeaderIcon = styled.TouchableOpacity`
+    justify-content: flex-start;
+    margin-right: 100px;
+    margin-left: 25px;
+`;
+
+export const HeaderTitle = styled.Text`
+    font-family: ${theme.FONT_FAMILY.SEMIBOLD};
+    font-size: ${theme.FONT_SIZE.XMD};
+    
+`;
+
+export const ContentContainer = styled.View`
+    margin-top: 20px;
+    padding: 20px;
 `;

@@ -42,6 +42,7 @@ export const WeatherInfo = styled.Text`
     font-family: ${theme.FONT_FAMILY.SEMIBOLD};
     font-size: ${theme.FONT_SIZE.SM};
     color: ${theme.COLORS.SECONDARY};
+    max-width: 150px;
 `;
 
 export const FlatListView = styled.View`

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword, updateEmail, updatePassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useState} from "react";
 import { Alert } from "react-native";
@@ -51,7 +51,6 @@ export function AuthProvider({children, navigation}){
     };
 
     const handleRedefinePassword = (email) => {
-        const auth = getAuth();
         sendPasswordResetEmail(auth, email)
         .then(() => {
             navigation.navigate('LoginScreen');
@@ -64,8 +63,28 @@ export function AuthProvider({children, navigation}){
         });
     };
 
+    const handleUpdateEmail = (newEmail) => {
+        updateEmail(auth.currentUser, newEmail).then(() => {
+            
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Alert.alert(errorCode, errorMessage);
+        });
+    };
+
+    const handleUpdatePassword = (newPassword) => {
+        updatePassword(user, newPassword).then(() => {
+            
+          }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Alert.alert(errorCode, errorMessage);
+          });
+    };
+
     return(
-        <AuthContext.Provider value={{name, setName, handleSignIn, user, handleSignUp, handleRedefinePassword, setUser}}>
+        <AuthContext.Provider value={{name, setName, handleSignIn, user, handleSignUp, handleRedefinePassword, setUser, handleUpdateEmail, handleUpdatePassword}}>
             {children}
         </AuthContext.Provider>
     );
