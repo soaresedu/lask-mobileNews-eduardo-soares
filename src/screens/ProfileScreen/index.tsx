@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useContext } from "react";
 
-import { ProfileImage, Container, UserInfoContainer, UserName, Icon, LevelName, AccountInfoContainer, AccountStatiscsContainer, StaticsContent, StatiscsTitle, SettingsTitle, ModalContainer, HeaderContainer, HeaderIcon, HeaderTitle, ContentContainer } from "./style";
+import { ProfileImage, Container, UserInfoContainer, UserName, Icon, LevelName, AccountInfoContainer, AccountStatiscsContainer, StaticsContent, StatiscsTitle, SettingsTitle, ModalContainer, HeaderContainer, HeaderTitle, ContentContainer, DeletButton } from "./style";
 import { AuthContext } from "../../contexts/auth";
 import { LikedNewsContext } from "../../contexts/likedNews";
 import { Input } from "../../components/TextInput";
@@ -124,14 +124,16 @@ export function ProfileScreen(){
         setModalIsVisible(!modalIsVisible);
       }}>
         <HeaderContainer>
-          <HeaderIcon onPress={() => setModalIsVisible(!modalIsVisible)}>
+          <TouchableOpacity onPress={() => setModalIsVisible(!modalIsVisible)}>
             <Ionicons name='arrow-back-outline' size={25}/>
-          </HeaderIcon>
+          </TouchableOpacity>
           <HeaderTitle>My Account</HeaderTitle>
+          <HeaderTitle/>
         </HeaderContainer>
         <ContentContainer>
           <ProfileScreenButton buttonTitle='Update Email' iconName='chevron-forward-outline' onPress={() => setEmailModalIsVisible(!emailModalIsVisible)}/>
           <ProfileScreenButton buttonTitle='Update Password' iconName='chevron-forward-outline' onPress={() => setPasswordModalIsVisible(!passwordModalIsVisible)}/>
+          <DeletButton>Delete Account</DeletButton>
         </ContentContainer>
       </ModalContainer>
       <ModalContainer
@@ -141,9 +143,9 @@ export function ProfileScreen(){
         setModalIsVisible(!emailModalIsVisible);
       }}>
         <HeaderContainer>
-          <HeaderIcon onPress={() => setEmailModalIsVisible(!emailModalIsVisible)}>
+          <TouchableOpacity onPress={() => setEmailModalIsVisible(!emailModalIsVisible)}>
             <Ionicons name='arrow-back-outline' size={25}/>
-          </HeaderIcon>
+          </TouchableOpacity>
           <HeaderTitle>Update Email</HeaderTitle>
           <Text></Text>
         </HeaderContainer>
@@ -159,9 +161,9 @@ export function ProfileScreen(){
         setModalIsVisible(!passwordModalIsVisible);
       }}>
         <HeaderContainer>
-          <HeaderIcon onPress={() => setPasswordModalIsVisible(!passwordModalIsVisible)}>
+          <TouchableOpacity onPress={() => setPasswordModalIsVisible(!passwordModalIsVisible)}>
             <Ionicons name='arrow-back-outline' size={25}/>
-          </HeaderIcon>
+          </TouchableOpacity>
           <HeaderTitle>Update Password</HeaderTitle>
           <Text></Text>
         </HeaderContainer>

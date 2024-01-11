@@ -45,12 +45,44 @@ export function LikedNewsProvider({children}){
         setReadArticles((prevReadArticles) => prevReadArticles + 1);
     }
 
+    const storeReadArticles = async (readArticles) => {
+        try {
+            if (readArticles !== undefined && readArticles !== null) {
+                const jsonValue = JSON.stringify(readArticles);
+                await AsyncStorage.setItem('readArticles_key', jsonValue);
+            } else {
+                await AsyncStorage.removeItem('readArticles_key');
+            }
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Alert.alert(errorCode, errorMessage);
+        }
+    };
+
+    const getStoredReadArticles = async () => {
+        try {
+            const storedReadArticles = await AsyncStorage.getItem('readArticles_key'); 
+            if (storedReadArticles !== null) {
+            setReadArticles(JSON.parse(storedReadArticles));
+            }
+        }catch(error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Alert.alert(errorCode, errorMessage);
+        }
+    };
+
     useEffect(() => {
         getStoredLikedNews();
     }, []);
+
+    useEffect(() => {
+        storeReadArticles(readArticles);
+    }, [readArticles]);
     
     return(
-        <LikedNewsContext.Provider value={{likedNews, addLikedNews, storeLikedNews, getStoredLikedNews, setLikedNews, addReadArticles, readArticles}}>
+        <LikedNewsContext.Provider value={{likedNews, addLikedNews, storeLikedNews, getStoredLikedNews, setLikedNews, addReadArticles, readArticles, storeReadArticles, getStoredReadArticles}}>
             {children}
         </LikedNewsContext.Provider>
     );

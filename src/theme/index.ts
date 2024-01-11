@@ -24,7 +24,7 @@ export default{
         BACKGROUNDPRIMARY: '#E9EEFA',
         BACKGROUNDSECUNDARY: '#FFF',
         BRANDBLUE: '#E9EEFA',
-        TEXTSECONDARY: '#F5F4F2'
-  
+        TEXTSECONDARY: '#F5F4F2',
+        RED: '#E02607'
       }
 }

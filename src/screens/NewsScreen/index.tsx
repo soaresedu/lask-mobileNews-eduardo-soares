@@ -1,10 +1,11 @@
 import { Alert, TouchableOpacity, View} from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { NewsImage, TextContainer, Title, AuthorInfo, AuthorImage,Author, NewsText, ButtonContainer } from './style';
 import { LikedNewsContext } from '../../contexts/likedNews';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export function NewsScreen({route}){
 
