@@ -2,22 +2,27 @@
 
 This project was made for training purposes only!
 
-![1](https://github.com/soaresedu/projeto-compass_sales-Eduardo-dos-Santos-Soares-Squad05/assets/110675151/d8b485a9-cd8c-434c-a27c-28f0d86b6374)
+![readMeImage](https://github.com/soaresedu/lask-mobileNews-eduardo-soares/assets/110675151/19cf3091-e62f-4034-8e69-3d79edf6b867)
 
-The initial project was user authentication, where you can create users, log them in and if you lose your password, you can change it via a link that is sent to the user's email address.
+The initial project consists of a news application, where the user can receive the latest news, read its content, like the ones they like most, in addition to being able to search for specific articles.
 
 ## 🔨 Project Funcionalities
 
-- `Funcionalidade 1` `Show Top Headlines Articles`: 
-- `Funcionalidade 2` `Show Article Details`: Registered users can log in at the login screen
-- `Funcionalidade 3` `Like Article`: For users who have forgotten their password, it is possible to send a password reset link to their email address. 
+- `Funcionality 1` `Shows Top Headlines`: Shows the top headlines.
+- `Funcionality 2` `Show Article Details`: Shows the details of the selected article.
+- `Funcionality 3` `Like Article`: It allows the user to like the articles they like most. All liked articles are available for viewing on a screen dedicated to displaying liked articles.
+- `Funcionality 4` `Explore`: Allows the user to search for specific articles using keywords or a specific category.
+- `Funcionality 5` `Authentication`: User authentication, with login, registration and option to reset password in case of loss.
+- `Funcionality 6` `Profile`: The user has a profile screen where they can customize their information, such as profile photo and name.
+- `Funcionality 7` `Weather`: Weather information updated in real time.
 
 ## ✔️ The technologies used in this project were:
 
 - ``React Native``
 - ``TypeScript``
-- ``React Natine Firebase`` 
-
+- ``React Natine Firebase``
+- ``GNews API``
+- ``HG Weather``
 
 
 # Getting Started
