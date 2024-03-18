@@ -1,90 +1,55 @@
-import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword, updateEmail, updatePassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {createContext, useState} from "react";
+import React, {ReactNode, createContext, useState} from "react";
+import Parse from "parse/react-native.js";
 import { Alert } from "react-native";
-
-import { app } from "../service/firebase/firebaseSDK";
 
 export const AuthContext = createContext(undefined);
 
-export function AuthProvider({children, navigation}){
-
+export function AuthProvider({children}){
+   
     const [name, setName] = useState('');
     const [user, setUser] = useState(null);
-    const auth = getAuth(app);
 
-    const handleSignIn = (email, password, navigation) => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            setUser(userCredential.user.toJSON());
-            const  storeUser = async() => {
-                const {uid, email} = userCredential.user;
-                const userData = { uid, email };
-                const jsonValue = JSON.stringify(userData);
-                await AsyncStorage.setItem('user_key', jsonValue);     
-            }
-            storeUser();
-            navigation.navigate('HomeScreen');
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            Alert.alert(errorCode, errorMessage);
-        });
-    };
-
-    const handleSignUp = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
+    /*Parse.setAsyncStorage(AsyncStorage); 
+    Parse.initialize('TsXUleGyyEiCLKc9r1gJgGgUHFPel3NZlXeVdIoV','WWr1SXv7mPacYwnYkskLQWLNy8VymXPvUYlxAJvC');
+    Parse.serverURL = 'https://parseapi.back4app.com/';
+  
+    const doUserRegistration = async function (usernameValue, passwordValue): Promise<boolean> {   
+        return await Parse.User.signUp(usernameValue, passwordValue)
+          .then((createdUser: Parse.User) => {
+            Alert.alert(
+              "Success!",
+              `User ${createdUser.get("username")} was successfully created!`
+            );
             navigation.navigate('LoginScreen');
-        })
-        .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-            Alert.alert('Error', 'That email address is already in use!');
-            }
-        
-            if (error.code === 'auth/invalid-email') {
-            Alert.alert('Error','That email address is invalid!');
-            }
-        });
-    };
-
-    const handleRedefinePassword = (email) => {
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            navigation.navigate('LoginScreen');
-            Alert.alert('Email Sent', 'Your password reset email has been sent!');
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            Alert.alert(errorCode, errorMessage);
-        });
-    };
-
-    const handleUpdateEmail = (newEmail) => {
-        updateEmail(auth.currentUser, newEmail).then(() => {
-            
-        }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            Alert.alert(errorCode, errorMessage);
-        });
-    };
-
-    const handleUpdatePassword = (newPassword) => {
-        updatePassword(user, newPassword).then(() => {
-            
-          }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            Alert.alert(errorCode, errorMessage);
+            return true;
+          })
+          .catch((error) => {
+            Alert.alert("Error!", error.message);
+            return false;
           });
     };
 
+    const doUserLogIn = async function (usernameValue, passwordValue): Promise<boolean> {
+        return await Parse.User.logIn(usernameValue, passwordValue)
+          .then(async (loggedInUser: Parse.User) => {
+            Alert.alert(
+              'Success!',
+              `User ${loggedInUser.get('username')} has successfully signed in!`,
+            );
+            const currentUser: Parse.User = await Parse.User.currentAsync();
+            console.log(loggedInUser === currentUser);
+            navigation.navigate('HomeScreen');
+            return true;
+          })
+          .catch((error) => {
+            Alert.alert('Error!', error.message);
+            return false;
+          });
+      };*/
+
     return(
-        <AuthContext.Provider value={{name, setName, handleSignIn, user, handleSignUp, handleRedefinePassword, setUser, handleUpdateEmail, handleUpdatePassword}}>
+        <AuthContext.Provider value={{name, setName, user, setUser}}>
             {children}
         </AuthContext.Provider>
     );

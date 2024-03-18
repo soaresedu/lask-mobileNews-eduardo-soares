@@ -16,7 +16,7 @@ export const GreetingsSection = styled.View`
     position: fixed;
     flex-direction: row;
     margin-top: 52px;
-    margin-left: 32px;
+    margin-left: 24px;
     margin-bottom: 12px;
     background-color: ${theme.COLORS.BACKGROUNDPRIMARY};
 `;

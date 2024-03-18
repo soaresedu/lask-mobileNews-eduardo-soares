@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {Text, FlatList, TouchableOpacity, View, ScrollView } from 'react-native';
+import {Text, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle} from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
 import { AuthContext } from "../../contexts/auth";
-import { LikedNewsContext } from '../../contexts/likedNews';
 
 export function HomeScreen(){
 
@@ -36,14 +35,12 @@ export function HomeScreen(){
     const formattedDate = currentDate.toDateString();
     const navigation: NewsScreenNavigationProp = useNavigation();
     const { name } = useContext(AuthContext);
-    const { addReadArticles } = useContext(LikedNewsContext);
 
     const fetchNews = async (category) => {
       try {
         const response = await axios.get(`https://gnews.io/api/v4/top-headlines?category=${category}&apikey=${GNewsapiKey}`);
         return response.data.articles;
       } catch (error) {
-        console.error(`Erro ao buscar notícias (${category}):`, error);
         return [];
       }
     };
@@ -83,7 +80,7 @@ export function HomeScreen(){
       <GreetingView>
         <GreetingsSection>
             <SalutationText>
-                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}{name}{'\n'} 
+                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}Eduardo Soares{'\n'} 
                 <DateText>{formattedDate}</DateText> 
             </SalutationText>    
             <WeatherInfo> 
@@ -100,9 +97,7 @@ export function HomeScreen(){
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              <TouchableOpacity activeOpacity={0.4} onPress={() => {
-                navigate(item)
-                addReadArticles()}}>
+              <TouchableOpacity activeOpacity={0.4} onPress={() => navigate(item)}>
                 <FlatListView>
                   <ImageNews source={{ uri: item.image }} />
                   <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>

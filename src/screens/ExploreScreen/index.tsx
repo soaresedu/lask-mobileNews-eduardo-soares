@@ -37,6 +37,7 @@ export function ExploreScreen(){
   const [searchedNews, setSearchedNews] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   
+  
   const navigation: NewsScreenNavigationProp = useNavigation();
   const categories = {
     business: 'business',
@@ -74,7 +75,7 @@ export function ExploreScreen(){
           `https://gnews.io/api/v4/search?q=${searchText}&apikey=${GNewsapiKey}`);
         setSearchedNews(responses.data.articles);
       }catch (error){
-        console.log("Error:", error)
+        
       }
     };
     getSearchedNews();

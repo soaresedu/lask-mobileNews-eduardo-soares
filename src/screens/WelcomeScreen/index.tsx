@@ -8,7 +8,7 @@ import { TextBox,  BuildingImage, TitleBox, ParagraphText, Button, ButtonText } 
 export function WelcomeScreen({navigation}){
 
   const buttonPress = () => {
-    navigation.replace('LoginScreen')
+    navigation.replace('HomeScreen')
   }
 
   return (
