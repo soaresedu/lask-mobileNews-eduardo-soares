@@ -12,8 +12,8 @@ export function News({data, navigate}){
           data={data}
           keyExtractor={(item) => String(item.title)}
           renderItem={({item}) => (
-          <TouchableOpacity activeOpacity={0.4} onPress={() => 
-            {navigate(item)
+          <TouchableOpacity activeOpacity={0.4} onPress={() => {
+            navigate(item)
             addReadArticles()}}>
           <FlatListView>
             <NewsTitle numberOfLines={2}>{item.title}</NewsTitle>

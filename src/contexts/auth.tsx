@@ -1,55 +1,53 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {ReactNode, createContext, useState} from "react";
-import Parse from "parse/react-native.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {createContext, useEffect, useState} from "react";
 import { Alert } from "react-native";
 
 export const AuthContext = createContext(undefined);
 
 export function AuthProvider({children}){
    
-    const [name, setName] = useState('');
-    const [user, setUser] = useState(null);
+    const [name, setName] = useState<string>(undefined);
 
-    /*Parse.setAsyncStorage(AsyncStorage); 
-    Parse.initialize('TsXUleGyyEiCLKc9r1gJgGgUHFPel3NZlXeVdIoV','WWr1SXv7mPacYwnYkskLQWLNy8VymXPvUYlxAJvC');
-    Parse.serverURL = 'https://parseapi.back4app.com/';
+    useEffect(() => {
+      getStoredName();
+    }, []);
+
+    useEffect(() => {
+      storeName(name);
+    }, [name]); // Depende do estado 'name'
   
-    const doUserRegistration = async function (usernameValue, passwordValue): Promise<boolean> {   
-        return await Parse.User.signUp(usernameValue, passwordValue)
-          .then((createdUser: Parse.User) => {
-            Alert.alert(
-              "Success!",
-              `User ${createdUser.get("username")} was successfully created!`
-            );
-            navigation.navigate('LoginScreen');
-            return true;
-          })
-          .catch((error) => {
-            Alert.alert("Error!", error.message);
-            return false;
-          });
+    const storeName = async (name: string) => {
+      try {
+        if (name) {
+          await AsyncStorage.setItem('userName', name);
+        } else {
+          await AsyncStorage.removeItem('userName');
+        }
+      } catch (error) {
+        console.error('Erro ao salvar o nome:', error);
+        Alert.alert('Erro', 'Ocorreu um erro ao salvar o nome.');
+      }
+    };
+  
+    const getStoredName = async () => {
+      try {
+        const storedName = await AsyncStorage.getItem('userName');
+        if (storedName !== null) {
+          setName(storedName);
+        }
+      } catch (error) {
+        console.error('Erro ao obter o nome:', error);
+        Alert.alert('Erro', 'Ocorreu um erro ao obter o nome.');
+      }
+    };
+  
+    const handleNameChange = (newName: string) => {
+      setName(newName);
+      storeName(name);
     };
 
-    const doUserLogIn = async function (usernameValue, passwordValue): Promise<boolean> {
-        return await Parse.User.logIn(usernameValue, passwordValue)
-          .then(async (loggedInUser: Parse.User) => {
-            Alert.alert(
-              'Success!',
-              `User ${loggedInUser.get('username')} has successfully signed in!`,
-            );
-            const currentUser: Parse.User = await Parse.User.currentAsync();
-            console.log(loggedInUser === currentUser);
-            navigation.navigate('HomeScreen');
-            return true;
-          })
-          .catch((error) => {
-            Alert.alert('Error!', error.message);
-            return false;
-          });
-      };*/
-
     return(
-        <AuthContext.Provider value={{name, setName, user, setUser}}>
+        <AuthContext.Provider value={{name, setName, handleNameChange}}>
             {children}
         </AuthContext.Provider>
     );

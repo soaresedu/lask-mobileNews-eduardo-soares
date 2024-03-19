@@ -15,15 +15,16 @@ export const UserInfoContainer = styled.View`
 export const ProfileImage = styled.Image`
     width: 150px;
     height: 150px;
-    margin-right: 10px;
+    margin-right: 15px;
     border-radius: 75px;
     margin-top: 24px;
 `;
 
-export const UserName = styled.Text`
+export const UserName = styled.TextInput`
     font-family: ${theme.FONT_FAMILY.SEMIBOLD};
     font-size: ${theme.FONT_SIZE.ML};
     align-self: center;
+    min-width: 200px;
     max-width: 200px;
 `;
 

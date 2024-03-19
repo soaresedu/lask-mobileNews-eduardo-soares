@@ -11,8 +11,7 @@ import { ProfileScreenButton } from "../../components/ProfileScreenButton";
 export function ProfileScreen(){
 
   const [image, setImage] = useState(null);
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-  const { setName } = useContext(AuthContext);
+  const { name, setName, handleNameChange, getStoredName } = useContext(AuthContext);
   const { readArticles } = useContext(LikedNewsContext);
 
   const pickImage = async () => {
@@ -42,7 +41,7 @@ export function ProfileScreen(){
       if (storedImage) {
         setImage(storedImage);
       }
-      const storedName = await AsyncStorage.getItem('userName_key');
+      const storedName = await AsyncStorage.getItem('userName');
       if (storedName !== null) {
         setName(storedName);
       }
@@ -54,6 +53,7 @@ export function ProfileScreen(){
   };
 
   getData();
+  getStoredName();
 
   return(
     <Container>
@@ -61,7 +61,10 @@ export function ProfileScreen(){
         <TouchableOpacity onPress={pickImage} activeOpacity={0.8}>
           {image ? (<ProfileImage source={{ uri: image }}/>) : (<ProfileImage source={require('../../assets/images/inicialImage.png')}/>)}
         </TouchableOpacity>
-        <UserName>Eduardo Soares</UserName>
+        <UserName
+        value={name}
+        onChangeText={() => handleNameChange(name)}
+        placeholder="Enter your name">{name}</UserName>
       </UserInfoContainer>
       <View>
         <Icon name='medal-outline' size={25} color='#2D5BD0'/>
@@ -82,10 +85,10 @@ export function ProfileScreen(){
         </AccountStatiscsContainer>
       </AccountInfoContainer>
       <SettingsTitle>Settings</SettingsTitle>
-      <ProfileScreenButton buttonTitle='My Account' iconName='chevron-forward-outline' onPress={() => setModalIsVisible(!modalIsVisible)}/>
-      <ProfileScreenButton buttonTitle='Privacy Settings' iconName='chevron-forward-outline' onPress={undefined}/>
-      <ProfileScreenButton buttonTitle='Offline Reading' iconName='chevron-forward-outline' onPress={undefined}/>
-      <ProfileScreenButton buttonTitle='About Us' iconName='chevron-forward-outline' onPress={undefined}/>
+      <ProfileScreenButton buttonTitle='My Account' iconName='chevron-forward-outline'/>
+      <ProfileScreenButton buttonTitle='Privacy Settings' iconName='chevron-forward-outline'/>
+      <ProfileScreenButton buttonTitle='Offline Reading' iconName='chevron-forward-outline'/>
+      <ProfileScreenButton buttonTitle='About Us' iconName='chevron-forward-outline'/>
   </Container>
   );
 };

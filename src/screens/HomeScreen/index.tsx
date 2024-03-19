@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { Container, GreetingView, GreetingsSection, SalutationText, DateText, WeatherInfo, FlatListView, ImageNews, NewsTitle} from './style';
 import { GNewsapiKey } from '../../service/api/apiKey';
-import { AuthContext } from "../../contexts/auth";
+import { LikedNewsContext } from '../../contexts/likedNews';
 
 export function HomeScreen(){
 
@@ -34,7 +34,7 @@ export function HomeScreen(){
     const currentDate = new Date();
     const formattedDate = currentDate.toDateString();
     const navigation: NewsScreenNavigationProp = useNavigation();
-    const { name } = useContext(AuthContext);
+    const { addReadArticles } = useContext(LikedNewsContext);
 
     const fetchNews = async (category) => {
       try {
@@ -59,7 +59,8 @@ export function HomeScreen(){
     }, []);
 
     const navigate = (item) => {      
-      navigation.navigate("NewsScreen", {data: item})
+      navigation.navigate("NewsScreen", {data: item});
+      addReadArticles();
     };
 
     useEffect(() => {
@@ -80,7 +81,7 @@ export function HomeScreen(){
       <GreetingView>
         <GreetingsSection>
             <SalutationText>
-                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'},{'\n'}Eduardo Soares{'\n'} 
+                Good {weather?.currently.toString() === 'dia' ? 'Morning' : 'Night'}{'\n'}
                 <DateText>{formattedDate}</DateText> 
             </SalutationText>    
             <WeatherInfo> 
