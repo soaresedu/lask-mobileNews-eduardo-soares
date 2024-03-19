@@ -12,7 +12,6 @@ The initial project consists of a news application, where the user can receive t
 - `Funcionality 2` `Show Article Details`: Shows the details of the selected article.
 - `Funcionality 3` `Like Article`: It allows the user to like the articles they like most. All liked articles are available for viewing on a screen dedicated to displaying liked articles.
 - `Funcionality 4` `Explore`: Allows the user to search for specific articles using keywords or a specific category.
-- `Funcionality 5` `Authentication`: User authentication, with login, registration and option to reset password in case of loss.
 - `Funcionality 6` `Profile`: The user has a profile screen where they can customize their information, such as profile photo and name.
 - `Funcionality 7` `Weather`: Weather information updated in real time.
 
@@ -20,7 +19,6 @@ The initial project consists of a news application, where the user can receive t
 
 - ``React Native``
 - ``TypeScript``
-- ``React Natine Firebase``
 - ``GNews API``
 - ``HG Weather``
 
